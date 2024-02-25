@@ -1,0 +1,247 @@
+{
+	"hosts": {
+		// Retail Hosts
+		"retail":           "10.21.0.0/16",
+		"retail-traefik":   "10.21.127.254/32",
+		"retail-kube":      "10.21.128.0/24",
+		"retail-postgres":  "10.21.129.0/24",
+		"retail-redis":     "10.21.130.0/24",
+		"retail-cloudamqp": "10.21.132.0/24",
+		"retail-grafana":   "10.21.133.0/24",
+
+		// Lloyds Hosts
+		"lloyds":           "10.23.0.0/16",
+		"lloyds-traefik":   "10.23.127.254/32",
+		"lloyds-kube":      "10.23.128.0/24",
+		"lloyds-postgres":  "10.23.129.0/24",
+		"lloyds-redis":     "10.23.130.0/24",
+		"lloyds-cloudamqp": "10.23.132.0/24",
+		"lloyds-grafana":   "10.23.133.0/24",
+
+		// AIT Hosts
+		"ait":           "10.61.0.0/16",
+		"ait-traefik":   "10.61.127.254/32",
+		"ait-kube":      "10.61.128.0/24",
+		"ait-postgres":  "10.61.129.0/24",
+		"ait-redis":     "10.61.130.0/24",
+		"ait-cloudamqp": "10.61.132.0/24",
+		"ait-grafana":   "10.61.133.0/24",
+
+		// Staging Hosts
+		"staging":           "10.31.0.0/16",
+		"staging-traefik":   "10.31.127.254/32",
+		"staging-kube":      "10.31.128.0/24",
+		"staging-postgres":  "10.31.129.0/24",
+		"staging-redis":     "10.31.130.0/24",
+		"staging-cloudamqp": "10.31.132.0/24",
+		"staging-grafana":   "10.31.133.0/24",
+
+		// Production Hosts
+		"prod":           "10.11.0.0/16",
+		"prod-traefik":   "10.11.127.254/32",
+		"prod-kube":      "10.11.128.0/24",
+		"prod-postgres":  "10.11.129.0/24",
+		"prod-redis":     "10.11.130.0/24",
+		"prod-cloudamqp": "10.11.132.0/24",
+		"prod-grafana":   "10.11.133.0/24",
+	},
+	"tagOwners": {
+		"tag:terraform": ["group:devops"],
+	},
+	"acls": [
+		// Default Allow all to all Rule, this should always be commented.
+		// {"action": "accept", "src": ["*"], "dst": ["*:*"]},
+
+		// Everybody Grafana Access
+		{"action": "accept", "src": ["*"], "dst": ["prod-grafana:443"]},
+
+		// Production Web Access (hermes, airbyte, etc)
+		{
+			"action": "accept",
+			"src": [
+				"group:devops",
+				"group:developer",
+				"group:data",
+				"group:service",
+				"group:product",
+			],
+			"dst": ["prod-traefik:443"],
+		},
+
+		// Production Database Access
+		{
+			"action": "accept",
+			"src":    ["group:devops", "group:developer", "group:data"],
+			"dst":    ["prod-postgres:5432"],
+		},
+
+		// Production Redis Access
+		{
+			"action": "accept",
+			"src":    ["group:devops", "group:developer"],
+			"dst":    ["prod-redis:6380"],
+		},
+
+		// CloudAMQP Access
+		{
+			"action": "accept",
+			"src":    ["group:devops", "group:developer"],
+			"dst": [
+				"prod-cloudamqp:443",
+				"staging-cloudamqp:443",
+				"lloyds-cloudamqp:443",
+				"retail-cloudamqp:443",
+				"ait-cloudamqp:443",
+			],
+		},
+
+		// Kube Access
+		{
+			"action": "accept",
+			"src":    ["group:devops", "group:developer"],
+			"dst": [
+				"prod-kube:443",
+				"staging-kube:443",
+				"lloyds-kube:443",
+				"retail-kube:443",
+				"ait-kube:443",
+			],
+		},
+
+		// Non-Production Web Access
+		{
+			"action": "accept",
+			"src": [
+				"group:devops",
+				"group:developer",
+				"group:data",
+				"group:service",
+				"group:product",
+			],
+			"dst": [
+				"staging-traefik:443",
+				"ait-traefik:443",
+				"lloyds-traefik:443",
+				"retail-traefik:443",
+			],
+		},
+
+		// Non-Production Postgres Access
+		{
+			"action": "accept",
+			"src":    ["group:devops", "group:developer", "group:data"],
+			"dst": [
+				"staging-postgres:5432",
+				"ait-postgres:5432",
+				"lloyds-postgres:5432",
+				"retail-postgres:5432",
+			],
+		},
+
+		// Non-Production Redis Access
+		{
+			"action": "accept",
+			"src":    ["group:devops", "group:developer", "group:data"],
+			"dst": [
+				"staging-redis:6380",
+				"ait-redis:6380",
+				"lloyds-redis:6380",
+				"retail-redis:6380",
+			],
+		},
+
+		// DevOps SSH Servers
+		{"action": "accept", "src": ["group:devops"], "dst": ["tag:terraform:22"]},
+	],
+	"groups": {
+		"group:devops": [
+			"cpressland@bink.com",
+			"nread@bink.com",
+			"tviknarajah@bink.com",
+			"njames@bink.com",
+		],
+		"group:secops": ["jirving@bink.com"],
+		"group:product": [
+			"sking@bink.com",
+			"cmorrow@bink.com",
+			"cmuntean@bink.com",
+			"bking@bink.com",
+			"mrowe@bink.com",
+			"lcodreanu@bink.com",
+			"nodedra@bink.com",
+			"mmorar@bink.com",
+			"mwoodhams@bink.com",
+			"jwoodhams@bink.com",
+			"jjones@bink.com",
+			"pb@bink.com",
+			"mswarbrick@bink.com",
+		],
+		"group:developer": [
+			"cl@bink.com",
+			"ml@bink.com",
+			"bleadbitter@bink.com",
+			"kaziz@bink.com",
+			"lhamilton@bink.com",
+			"cgouws@bink.com",
+			"fmilani@bink.com",
+		],
+		"group:commercial": [
+			"mlaubscher@bink.com",
+			"mkerr@bink.com",
+			"ndunsdon@bink.com",
+			"sgraham@bink.com",
+			"mlobontiu@bink.com",
+			"spettitt@bink.com",
+			"hlantsbery@bink.com",
+			"bdamshenas@bink.com",
+			"sbransden@bink.com",
+		],
+		"group:data": ["cmitchell@bink.com", "abhakta@bink.com"],
+		"group:finance": [
+			"crajagi@bink.com",
+			"jbrogden@bink.com",
+			"jraine@bink.com",
+			"rmyerscough@bink.com",
+		],
+		"group:ext":        ["lmcguinness@bink.com", "mj@bink.com", "ah@bink.com"],
+		"group:service":    ["rfleming@bink.com", "kpatel@bink.com", "jlindsay@bink.com"],
+		"group:hr":         ["ggoodman@bink.com", "ndunsdon@bink.com"],
+		"group:legal":      ["rwebb@bink.com", "dcamp@bink.com"],
+		"group:compliance": ["cg@bink.com", "jirving@bink.com"],
+	},
+	"autoApprovers": {
+		"routes": {
+			"10.0.0.0/8": ["tag:terraform"],
+		},
+	},
+	"nodeAttrs": [
+		{"target": ["group:devops"], "ipPool": ["100.80.0.0/24"]},
+		{"target": ["group:developer"], "ipPool": ["100.80.1.0/24"]},
+		{"target": ["group:secops"], "ipPool": ["100.80.2.0/24"]},
+		{"target": ["group:data"], "ipPool": ["100.80.3.0/24"]},
+		{"target": ["group:product"], "ipPool": ["100.80.4.0/24"]},
+		{"target": ["group:commercial"], "ipPool": ["100.80.5.0/24"]},
+		{"target": ["group:ext"], "ipPool": ["100.80.6.0/24"]},
+		{"target": ["group:finance"], "ipPool": ["100.80.7.0/24"]},
+		{"target": ["group:legal"], "ipPool": ["100.80.7.0/24"]},
+		{"target": ["group:service"], "ipPool": ["100.80.8.0/24"]},
+		{"target": ["group:hr"], "ipPool": ["100.80.9.0/24"]},
+		{"target": ["group:compliance"], "ipPool": ["100.80.10.0/24"]},
+		{"target": ["tag:terraform"], "ipPool": ["100.81.0.0/24"]},
+	],
+	"ssh": [
+		{
+			"action": "accept",
+			"src":    ["group:devops"],
+			"dst":    ["autogroup:self", "tag:terraform"],
+			"users":  ["autogroup:nonroot"],
+		},
+	],
+	"tests": [
+		{
+			"src":    "cpressland@bink.com",
+			"proto":  "tcp",
+			"accept": ["10.31.128.4:443"],
+		},
+	],
+}

@@ -1,0 +1,39 @@
+name: Tailscale ACL GitOps
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  acls:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        id: fetch-old-version
+        with:
+          path: .
+          key: version-cache.json
+
+      - name: Deploy ACL
+        if: github.event_name == 'push'
+        id: deploy-acl
+        uses: tailscale/gitops-acl-action@v1
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_CLIENT_SECRET }}
+          tailnet: ${{ secrets.TS_TAILNET }}
+          action: apply
+
+      - name: ACL tests
+        if: github.event_name == 'pull_request'
+        id: test-acl
+        uses: tailscale/gitops-acl-action@v1
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_CLIENT_SECRET }}
+          tailnet: ${{ secrets.TS_TAILNET }}
+          action: test
