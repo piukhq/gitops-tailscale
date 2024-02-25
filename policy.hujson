@@ -51,7 +51,7 @@
 	},
 	"acls": [
 		// Default Allow all to all Rule, this should always be commented.
-		// {"action": "accept", "src": ["*"], "dst": ["*:*"]},
+		{"action": "accept", "src": ["*"], "dst": ["*:*"]},
 
 		// Everybody Grafana Access
 		{"action": "accept", "src": ["*"], "dst": ["prod-grafana:443"]},
