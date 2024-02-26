@@ -232,10 +232,10 @@
 	],
 	"ssh": [
 		{
-			"action": "accept",
+			"action": "check",
 			"src":    ["group:devops"],
 			"dst":    ["autogroup:self", "tag:terraform"],
-			"users":  ["autogroup:nonroot"],
+			"users":  ["autogroup:nonroot", "autogroup:root"],
 		},
 	],
 	"tests": [
