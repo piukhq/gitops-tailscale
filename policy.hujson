@@ -48,6 +48,7 @@
 	},
 	"tagOwners": {
 		"tag:terraform": ["group:devops"],
+		"tag:golink":    ["group:devops"],
 	},
 	"acls": [
 		// Default Allow all to all Rule, this should always be commented.
