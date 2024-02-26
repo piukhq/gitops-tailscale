@@ -57,6 +57,9 @@
 		// Everybody Grafana Access
 		{"action": "accept", "src": ["*"], "dst": ["prod-grafana:443"]},
 
+		// Everybody Golink Access
+		{"action": "accept", "src": ["*"], "dst": ["tag:golink:80"]},
+
 		// Production Web Access (hermes, airbyte, etc)
 		{
 			"action": "accept",
