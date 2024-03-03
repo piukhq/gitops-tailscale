@@ -19,6 +19,15 @@
 		"lloyds-cloudamqp": "10.23.132.0/24",
 		"lloyds-grafana":   "10.23.133.0/24",
 
+		// Sandbox Hosts
+		"sandbox":           "10.20.0.0/16",
+		"sandbox-traefik":   "10.20.127.254/32",
+		"sandbox-kube":      "10.20.128.0/24",
+		"sandbox-postgres":  "10.20.129.0/24",
+		"sandbox-redis":     "10.20.130.0/24",
+		"sandbox-cloudamqp": "10.20.132.0/24",
+		"sandbox-grafana":   "10.20.133.0/24",
+
 		// AIT Hosts
 		"ait":           "10.61.0.0/16",
 		"ait-traefik":   "10.61.127.254/32",
@@ -96,6 +105,7 @@
 				"staging-cloudamqp:443",
 				"lloyds-cloudamqp:443",
 				"retail-cloudamqp:443",
+				"sandbox-cloudamqp:443",
 				"ait-cloudamqp:443",
 			],
 		},
@@ -109,6 +119,7 @@
 				"staging-kube:443",
 				"lloyds-kube:443",
 				"retail-kube:443",
+				"sandbox-kube:443",
 				"ait-kube:443",
 			],
 		},
@@ -128,6 +139,7 @@
 				"ait-traefik:443",
 				"lloyds-traefik:443",
 				"retail-traefik:443",
+				"sandbox-traefik:443",
 			],
 		},
 
@@ -140,6 +152,7 @@
 				"ait-postgres:5432",
 				"lloyds-postgres:5432",
 				"retail-postgres:5432",
+				"sandbox-postgres:5432",
 			],
 		},
 
@@ -152,6 +165,7 @@
 				"ait-redis:6380",
 				"lloyds-redis:6380",
 				"retail-redis:6380",
+				"sandbox-redis:6380",
 			],
 		},
 
