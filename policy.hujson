@@ -90,7 +90,7 @@
 		// CloudAMQP Access
 		{
 			"action": "accept",
-			"src":    ["group:devops", "group:developer"],
+			"src":    ["group:devops", "group:developer", "group:architecture"],
 			"dst": [
 				"prod-cloudamqp:443",
 				"staging-cloudamqp:443",
