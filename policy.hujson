@@ -134,7 +134,7 @@
 		// Non-Production Postgres Access
 		{
 			"action": "accept",
-			"src":    ["group:devops", "group:developer", "group:data"],
+			"src":    ["group:devops", "group:developer", "group:data", "group:architecture"],
 			"dst": [
 				"staging-postgres:5432",
 				"ait-postgres:5432",
@@ -202,6 +202,7 @@
 			"sbransden@bink.com",
 		],
 		"group:data": ["cmitchell@bink.com", "abhakta@bink.com"],
+		"group:architecture": ["mmorar@bink.com", "bking@bink.com"],
 		"group:finance": [
 			"crajagi@bink.com",
 			"jbrogden@bink.com",
@@ -232,6 +233,7 @@
 		{"target": ["group:service"], "ipPool": ["100.80.8.0/24"]},
 		{"target": ["group:hr"], "ipPool": ["100.80.9.0/24"]},
 		{"target": ["group:compliance"], "ipPool": ["100.80.10.0/24"]},
+		{"target": ["group:architecture"], "ipPool": ["100.80.11.0/24"]},
 		{"target": ["tag:terraform"], "ipPool": ["100.81.0.0/24"]},
 	],
 	"ssh": [
