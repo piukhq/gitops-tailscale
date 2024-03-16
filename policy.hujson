@@ -47,8 +47,9 @@
 		"prod-grafana":   "10.11.133.0/24",
 	},
 	"tagOwners": {
-		"tag:terraform": ["group:devops"],
+		"tag:gha":       ["group:devops"],
 		"tag:golink":    ["group:devops"],
+		"tag:terraform": ["group:devops"],
 	},
 	"acls": [
 		// Default Allow all to all Rule, this should always be commented.
@@ -235,6 +236,8 @@
 		{"target": ["group:compliance"], "ipPool": ["100.80.10.0/24"]},
 		{"target": ["group:architecture"], "ipPool": ["100.80.11.0/24"]},
 		{"target": ["tag:terraform"], "ipPool": ["100.81.0.0/24"]},
+		{"target": ["tag:golink"], "ipPool": ["100.81.1.0/24"]},
+		{"target": ["tag:gha"], "ipPool": ["100.81.2.0/24"]},
 	],
 	"ssh": [
 		{
