@@ -71,7 +71,7 @@
 				"group:service",
 				"group:product",
 			],
-			"dst": ["prod-traefik:80", "prod-traefik:443"],
+			"dst": ["prod-traefik:443"],
 		},
 
 		// Production Database Access
@@ -125,13 +125,9 @@
 				"group:product",
 			],
 			"dst": [
-				"staging-traefik:80",
 				"staging-traefik:443",
-				"ait-traefik:80",
 				"ait-traefik:443",
-				"retail-traefik:80",
 				"retail-traefik:443",
-				"sandbox-traefik:80",
 				"sandbox-traefik:443",
 			],
 		},
