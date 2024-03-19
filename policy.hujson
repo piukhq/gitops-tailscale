@@ -158,13 +158,15 @@
 
 		// DevOps SSH Servers
 		{"action": "accept", "src": ["group:devops"], "dst": ["tag:terraform:22"]},
+
+		// DevOps Exit Nodes
+		{"action": "accept", "src": ["group:devops"], "dst": ["autogroup:internet:*"]},
 	],
 	"groups": {
 		"group:devops": [
 			"cpressland@bink.com",
 			"nread@bink.com",
 			"tviknarajah@bink.com",
-			"njames@bink.com",
 		],
 		"group:secops": ["jirving@bink.com"],
 		"group:product": [
